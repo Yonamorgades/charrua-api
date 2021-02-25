@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-import user from '../models/user';
 import User,{IUser}from '../models/user';
 import jwt from 'jsonwebtoken';
 

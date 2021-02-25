@@ -3,7 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan'
 import passport from 'passport';
 import passportMidle from './middleweares/passport';
-import privateRoutes from './routes/private.routes';
+import privateRoutes from './routes/products';
 const app = express();
 
 // Routes
