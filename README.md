@@ -28,7 +28,7 @@
 * **Error Response:**
 
   * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "Produc doesn't exist" }`
+    **Content:** `{ error : "No products found" }`
 
-  OR
+
 
