@@ -4,6 +4,9 @@ import morgan from 'morgan'
 import passport from 'passport';
 import passportMidle from './middleweares/passport';
 import privateRoutes from './routes/products';
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('/home/ymorgades/Documentos/charrua-api/swagger.json');
 const app = express();
 
 // Routes
@@ -19,13 +22,10 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json());
 //Include passport to validate tokens
 app.use(passport.initialize());
+
 passport.use(passportMidle)
 
-
-app.get('/',(req, res) => {
-    res.send(`The api is at localhost:${app.get('port')}`)
-})
-
 app.use(authRoutes)
-app.use(privateRoutes)
+app.use(privateRoutes);
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 export default app
