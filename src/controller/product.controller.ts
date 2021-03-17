@@ -34,3 +34,11 @@ export const deleteProduct = async (req : Request, res : Response) => {
     const product = await Product.findOneAndDelete({ _id: req.params.id })
     res.send(req.params.id)
 }
+
+export const editProduct = async (req : Request, res : Response) => {
+    if(!req.params.id){
+        res.status(400).json({msg:'the product key is required'})
+        }
+    const product = await Product.findOneAndUpdate({ _id: req.params.id },req.body)
+    res.send(req.params.id)
+}

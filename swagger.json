@@ -2,21 +2,11 @@
     "swagger": "2.0",
     "info": {
       "version": "1.0.0",
-      "title": "My User Project CRUD",
-      "description": "My User Project Application API",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
+      "title": "charrua burguers API",
+      "description": "API to admin charrua burguers site content"
     },
-    "host": "localhost:8000",
+    "host": "localhost:3000",
     "basePath": "/",
-    "tags": [
-      {
-        "name": "Users",
-        "description": "API for users in the system"
-      }
-    ],
     "schemes": [
       "http"
     ],
@@ -27,185 +17,153 @@
       "application/json"
     ],
     "paths": {
-      "/addUser": {
+      "/product": {
         "post": {
           "tags": [
-            "Users"
+            "Products"
           ],
-          "description": "Create new user in system",
+          "summary": "Create a new product in system",
           "parameters": [
+            { 
+              "name" : "Authorization",
+              "in" : "header",
+              "description" : "Bearer JWT",
+              "required": true 
+            }
+            ,
             {
-              "name": "user",
+              "name": "Product",
               "in": "body",
-              "description": "User that we want to create",
+              "description": "product that we want to create",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Product"
               }
             }
-          ],
-          "produces": [
-            "application/json"
           ],
           "responses": {
             "200": {
-              "description": "New user is created",
+              "description": "OK",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Product"
               }
+            },
+            "401":{
+              "description": "Access token is missing or invalid"
             }
           }
-        } 
-      },
-      "/users": {
+        },
         "get": {
-            "tags": [
-              "Users"
-            ],
-            "summary": "Get all users in system",
-            "responses": {
-              "200": {
-                "description": "OK",
-                "schema": {
-                  "$ref": "#/definitions/Users"
-                }
+          "tags": [
+            "Products"
+          ],
+          "summary": "Get all Products in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Product"
               }
             }
           }
+        }
       },
-      "/user/{id}": {
+      "/product/{id}": {
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "ID of user that we want to find",
+            "description": "ID of product that we want to find",
             "type": "integer"
+          },
+          { 
+            "name" : "Authorization",
+            "in" : "header",
+            "description" : "Bearer JWT",
+            "required": true 
           }
         ],
         "delete": {
-          "summary": "Delete user with given ID",
+          "summary": "Delete product with given ID",
           "tags": [
-            "Users"
+            "Products"
           ],
           "responses": {
             "200": {
-              "description": "User is deleted",
+              "description": "Product is deleted",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Product"
               }
+            },
+            "401":{
+              "description": "Access token is missing or invalid"
             }
           }
         },
         "put": {
-          "summary": "Update user with give ID",
+          "summary": "Update product with give ID",
           "tags": [
-            "Users"
+            "Products"
           ],
           "parameters": [
             {
-              "name": "user",
+              "name": "product",
               "in": "body",
-              "description": "User with new values of properties",
+              "description": "Product with new values of properties",
               "schema": {
-                "$ref": "#/definitions/updateUser"
+                "$ref": "#/definitions/updateProduct"
               }
+            },
+            { 
+              "name" : "Authorization",
+              "in" : "header",
+              "description" : "Bearer JWT",
+              "required": true 
             }
           ],
           "responses": {
             "200": {
-              "description": "User is updated",
+              "description": "Product is updated",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Product"
               }
+            },
+            "401":{
+              "description": "Access token is missing or invalid"
             }
           }
         }
       }
     },
     "definitions": {
-      "User": {
+      "Product": {
         "required": [
           "name",
-          "_id",
-          "companies"
+          "description",
+          "ingredients",
+          "price",
+          "category"
         ],
         "properties": {
-          "_id": {
-            "type": "integer",
-            "uniqueItems": true
-          },
-          "isPublic": {
-            "type": "boolean"
-          },
           "name": {
-            "type": "string"
+           "type": "string"
           },
-          "books": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "amount": {
-                    "type": "number"
-                  }
-                }
-            }
-                
-          },
-          "companies": {
+          "ingredients": {
             "type": "array",
             "items": {
                 "type": "string"      
             }
-                
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "integer"
+          },
+          "category" : {
+            "type" : "string"
           }
-         
         }
-      },
-      "updateUser": {
-        "required": [
-          "name",
-          "companies"
-        ],
-        "properties": {
-          "isPublic": {
-            "type": "boolean"
-          },
-          "name": {
-            "type": "string"
-          },
-          "books": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "amount": {
-                    "type": "number"
-                  }
-                }
-            }
-                
-          },
-          "companies": {
-            "type": "array",
-            "items": {
-                "type": "string"      
-            }
-                
-          }
-         
-        }
-      },
-      "Users": {
-        "type": "array",
-        "$ref": "#/definitions/User"
       }
-     
     }
   }

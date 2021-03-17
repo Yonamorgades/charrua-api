@@ -12,4 +12,5 @@ router.get('/product', product_controller_1.getProducts);
 //MAKE A NEW PRODUCT ON DATABASE
 router.post('/product', passport_1.default.authenticate('jwt', { session: false }), product_controller_1.addProduct);
 router.delete('/product/:id', passport_1.default.authenticate('jwt', { session: false }), product_controller_1.deleteProduct);
+router.put('/product/:id', passport_1.default.authenticate('jwt', { session: false }), product_controller_1.editProduct);
 exports.default = router;

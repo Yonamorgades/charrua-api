@@ -25,7 +25,28 @@ app.use(passport.initialize());
 
 passport.use(passportMidle)
 
+
+const DisableTryItOutPlugin = function() {
+    return {
+      statePlugins: {
+        spec: {
+          wrapSelectors: {
+            allowTryItOutFor: () => () => false
+          }
+        }
+      }
+    }
+  }
+
+  const options = {
+    swaggerOptions: {
+        plugins: [
+             DisableTryItOutPlugin
+        ]
+     }
+  };
+
 app.use(authRoutes)
 app.use(privateRoutes);
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 export default app

@@ -24,7 +24,25 @@ app.use(express_1.default.json());
 //Include passport to validate tokens
 app.use(passport_1.default.initialize());
 passport_1.default.use(passport_2.default);
+const DisableTryItOutPlugin = function () {
+    return {
+        statePlugins: {
+            spec: {
+                wrapSelectors: {
+                    allowTryItOutFor: () => () => false
+                }
+            }
+        }
+    };
+};
+const options = {
+    swaggerOptions: {
+        plugins: [
+            DisableTryItOutPlugin
+        ]
+    }
+};
 app.use(authRoute_1.default);
 app.use(products_1.default);
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 exports.default = app;

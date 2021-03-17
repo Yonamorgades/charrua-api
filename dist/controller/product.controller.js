@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProduct = exports.addProduct = exports.getProducts = void 0;
+exports.editProduct = exports.deleteProduct = exports.addProduct = exports.getProducts = void 0;
 const product_1 = __importDefault(require("../models/product"));
 // RETURN THE DATABASE PRODUCTS LIST
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -45,3 +45,11 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.send(req.params.id);
 });
 exports.deleteProduct = deleteProduct;
+const editProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.params.id) {
+        res.status(400).json({ msg: 'the product key is required' });
+    }
+    const product = yield product_1.default.findOneAndUpdate({ _id: req.params.id }, req.body);
+    res.send(req.params.id);
+});
+exports.editProduct = editProduct;

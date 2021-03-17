@@ -1,7 +1,7 @@
 import {Router} from 'express'
 import passport from 'passport'
 const router = Router();
-import {getProducts,addProduct, deleteProduct} from '../controller/product.controller';
+import {getProducts,addProduct, deleteProduct,editProduct} from '../controller/product.controller';
 
 //RETURN ALL PRODUCTS ON DATA BASE
 router.get('/product',getProducts)
@@ -14,6 +14,7 @@ router.post('/product',passport.authenticate('jwt',{session:false}),addProduct)
 
 router.delete('/product/:id',passport.authenticate('jwt',{session:false}),deleteProduct)
 
+router.put('/product/:id',passport.authenticate('jwt',{session:false}),editProduct)
 
 
 
