@@ -2,11 +2,12 @@
   "name": "charrua-api-v2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
     "dev": "tsc-watch --onSuccess \"node dist/index.js\" ",
-    "build": "tsc"
+    "build": "tsc",
+    "prestart": "npm run build"
   },
   
   "keywords": [],
