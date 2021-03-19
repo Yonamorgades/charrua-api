@@ -12,9 +12,9 @@ router.post('/product',passport.authenticate('jwt',{session:false}),addProduct)
 
 
 
-router.delete('/product/:id',passport.authenticate('jwt',{session:false}),deleteProduct)
+router.delete('/product/',passport.authenticate('jwt',{session:false}),deleteProduct)
 
-router.put('/product/:id',passport.authenticate('jwt',{session:false}),editProduct)
+router.put('/product/',passport.authenticate('jwt',{session:false}),editProduct)
 
 
 

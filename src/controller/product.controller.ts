@@ -26,19 +26,44 @@ export const addProduct = async (req : Request, res: Response) => {
     await newProduct.save();
     return res.status(201).json(newProduct)
 }   
-
+//DELETE A PRODUCTO FROM THE DATABASE
 export const deleteProduct = async (req : Request, res : Response) => {
-    if(!req.params.id){
-        res.status(400).json({msg:'the product key is required'})
-     }
-    const product = await Product.findOneAndDelete({ _id: req.params.id })
-    res.send(req.params.id)
+    if(!req.query.id){
+        res.status(400).json({msg:'The product id is required'})
+    }
+    const findedProduct = await Product.findById(req.query.id)
+    if(!findedProduct){
+        res.status(400).json({msg:'The product id is invalid'})
+    }
+    const product = await Product.findOneAndDelete({ _id: req.query.id })
+    if(product){
+        res.status(200)
+        res.send(product)
+    }else{
+        res.status(400).json({'msg' : 'Delete error'});
+    }
 }
 
 export const editProduct = async (req : Request, res : Response) => {
-    if(!req.params.id){
-        res.status(400).json({msg:'the product key is required'})
-        }
-    const product = await Product.findOneAndUpdate({ _id: req.params.id },req.body)
-    res.send(req.params.id)
+    if(!req.query.id){
+        res.status(400).json({msg:'the product id is required'})
+    }
+    const findedProduct = await Product.findById(req.query.id)
+    if(!findedProduct){
+        res.status(400).json({msg:'the product id is invalid'})
+    }
+    const editedProduct = {
+        "price" : req.body.price ,
+        "category" : req.body.category,
+        "description" : req.body.description,
+       "name": req.body.name,
+       "ingredients" : req.body.ingredients
+    }
+    const product = await Product.findOneAndUpdate({ _id: req.query.id },editedProduct)
+    if(product){
+        res.status(200)
+        res.send(editProduct)
+    }else{
+        res.status(400).json({msg:'Update error'})
+    }
 }

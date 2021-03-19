@@ -111,7 +111,7 @@
               "in": "body",
               "description": "Product with new values of properties",
               "schema": {
-                "$ref": "#/definitions/updateProduct"
+                "$ref": "#/definitions/Product"
               }
             },
             { 
@@ -130,6 +130,71 @@
             },
             "401":{
               "description": "Access token is missing or invalid"
+            }
+          }
+        }
+      },
+      "/signin":{
+        "post":{
+          "tags": [
+            "Users"
+          ],
+          "summary": "Get and generate a JSON WEB TOKEN",
+          "parameters" : [
+            { 
+              "name" : "email",
+              "in" : "body",
+              "description" : "User email to generate a session token",
+              "required": true 
+            },
+            { 
+              "name" : "password",
+              "in" : "body",
+              "description" : "User password to generate a session token",
+              "required": true 
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JWT"
+            },
+            "401":{
+              "description": "The mail or the password are incorrect"
+            }
+          }
+        }
+      },
+      "/signup":{
+        "post":{
+          "tags": [
+            "Users"
+          ],
+          "summary": "Add a new user",
+          "parameters" : [
+            { 
+              "name" : "email",
+              "in" : "body",
+              "description" : "User email",
+              "required": true 
+            },
+            { 
+              "name" : "password",
+              "in" : "body",
+              "description" : "User password",
+              "required": true 
+            },{ 
+              "name" : "Authorization",
+              "in" : "header",
+              "description" : "Bearer JWT",
+              "required": true 
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User created successfully"
+            },
+            "401":{
+              "description": "Register error"
             }
           }
         }
@@ -164,6 +229,21 @@
             "type" : "string"
           }
         }
+      },
+      "Users" : {
+        "required" : [
+          "email",
+          "password"
+        ],
+        "properties":{
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        }
+        
       }
     }
   }

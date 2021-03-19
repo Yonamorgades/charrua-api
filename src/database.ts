@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import config from './config/config'
-mongoose.connect(config.DB.URI, { useNewUrlParser: true, useUnifiedTopology: true , useCreateIndex : true});
+mongoose.connect(config.DB.URI, { useNewUrlParser: true, useUnifiedTopology: true , useCreateIndex : true, useFindAndModify : false});
 
 const connection = mongoose.connection;
 

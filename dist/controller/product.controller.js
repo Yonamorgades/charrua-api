@@ -37,19 +37,47 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     return res.status(201).json(newProduct);
 });
 exports.addProduct = addProduct;
+//DELETE A PRODUCTO FROM THE DATABASE
 const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.params.id) {
-        res.status(400).json({ msg: 'the product key is required' });
+    if (!req.query.id) {
+        res.status(400).json({ msg: 'The product id is required' });
     }
-    const product = yield product_1.default.findOneAndDelete({ _id: req.params.id });
-    res.send(req.params.id);
+    const findedProduct = yield product_1.default.findById(req.query.id);
+    if (!findedProduct) {
+        res.status(400).json({ msg: 'The product id is invalid' });
+    }
+    const product = yield product_1.default.findOneAndDelete({ _id: req.query.id });
+    if (product) {
+        res.status(200);
+        res.send(product);
+    }
+    else {
+        res.status(400).json({ 'msg': 'Delete error' });
+    }
 });
 exports.deleteProduct = deleteProduct;
 const editProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.params.id) {
-        res.status(400).json({ msg: 'the product key is required' });
+    if (!req.query.id) {
+        res.status(400).json({ msg: 'the product id is required' });
     }
-    const product = yield product_1.default.findOneAndUpdate({ _id: req.params.id }, req.body);
-    res.send(req.params.id);
+    const findedProduct = yield product_1.default.findById(req.query.id);
+    if (!findedProduct) {
+        res.status(400).json({ msg: 'the product id is invalid' });
+    }
+    const editedProduct = {
+        "price": req.body.price,
+        "category": req.body.category,
+        "description": req.body.description,
+        "name": req.body.name,
+        "ingredients": req.body.ingredients
+    };
+    const product = yield product_1.default.findOneAndUpdate({ _id: req.query.id }, editedProduct);
+    if (product) {
+        res.status(200);
+        res.send(exports.editProduct);
+    }
+    else {
+        res.status(400).json({ msg: 'Update error' });
+    }
 });
 exports.editProduct = editProduct;
